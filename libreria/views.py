@@ -9,8 +9,6 @@ def principal(request):
 def pelicula(request):
     return render(request, "libreria/pelicula.html")
 
-def formulario(request):
-    return render(request, "libreria/formulario.html")
 
 def crear_pelicula(request):
 
@@ -23,7 +21,8 @@ def crear_pelicula(request):
         ano_estreno = request.POST["ano_estreno"]
         nueva_pelicula = pelicula(nombre = nombre, director = director, tematica = tematica, ano_estreno = ano_estreno)
 
-        nueva_pelicula.save()  
+        nueva_pelicula.save() 
+ 
         return render(request, "libreria/principal.html")
 
 

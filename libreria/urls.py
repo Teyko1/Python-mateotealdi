@@ -1,11 +1,10 @@
 from django.urls import path
-from libreria.views import formulario, principal, pelicula, formulario, crear_pelicula
+from libreria.views import principal, pelicula, crear_pelicula
 
 urlpatterns = [
     path("principal/", principal, name="principal"),
     path("pelicula/", pelicula, name ="pelicula"),
-    path("formulario/", formulario, name ="formulario"),
-    path("pelicula/crear/", crear_pelicula, name ="crearpelicula"),
+    path("crearpelicula/", crear_pelicula, name ="crearpelicula"),
     
     
 ]
