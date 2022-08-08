@@ -17,7 +17,7 @@ class pelicula(models.Model):
 
     def __str__(self):
 
-        return f"Nombre: {self.nombre} - Director: {self.director} - Categoria: {self.tematica} - Año {self.ano_estreno}"
+        return f"Pelicula: {self.nombre} - Director: {self.director} - Categoria: {self.tematica} - Año {self.ano_estreno}"
 
 class persona(models.Model):
     nombre = models.CharField(max_length=100)

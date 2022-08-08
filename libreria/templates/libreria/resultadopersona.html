@@ -1,0 +1,15 @@
+{% extends 'libreria/base.html' %}
+
+{% block biblioteca %}
+
+
+
+    
+    <h1 style="color: rgb(8, 8, 8)">Resultados Busqueda</h1>
+
+    {% for persona in personas %}
+    <p>{{persona.peliculas_preferidas}}</p>
+    <p>{{persona.libros_preferidos}}</p>
+    {% endfor %}
+
+{% endblock %}

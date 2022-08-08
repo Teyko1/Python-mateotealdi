@@ -79,6 +79,23 @@ def resultadolibro(request):
 
         return render(request, "libreria/resultadolibro.html", {"libros": libros_lista})
 
+
+def busquedapersona(request):
+    return render(request, "libreria/busquedapersona.html")
+
+def resultadopersona(request):
+
+    persona_nombre = request.GET.get("nombre", None)
+
+    if not persona_nombre:
+        return HttpResponse("No existe esa persona o no lo indicaste correctamente")
+    
+    else:
+
+        persona_lista = persona.objects.all()
+
+        return render(request, "libreria/resultadopersona.html", {"personas": persona_lista})
+
     
 
 
