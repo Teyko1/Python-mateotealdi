@@ -11,14 +11,13 @@
     {% extends 'libreria/base.html' %}
 
     
-    {% block libro %}
+    {% block pelicula %}
 
-    <h1 style="color: rgb(10, 10, 10)">Nombre de libros de la biblioteca</h1>
-    {% for libro in libros %}
-    <p style="color: rgb(7, 7, 7)">{{libro.nombre}}</p>
+    <h1 style="color: rgb(10, 10, 10)">Nombre de peliculas de la biblioteca</h1>
+    {% for pelicula in peliculas %}
+    <p style="color: rgb(7, 7, 7)">{{pelicula.nombre}}</p>
 {% endfor %}
     {% endblock %}
-        
     
 </body>
 </html>

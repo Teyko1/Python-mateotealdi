@@ -12,4 +12,17 @@
     <p>{{persona.libros_preferidos}}</p>
     {% endfor %}
 
+    <form action="pelicula_preferida" method="post">{% csrf_token %}
+
+        <input type="text" name="formulario_pelicula">
+        
+        {{formulario_pelicula.as_table}}
+
+        <input type="submit" value="Agregar">
+       
+
+
+    </form>
+
+
 {% endblock %}

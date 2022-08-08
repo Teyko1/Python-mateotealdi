@@ -1,4 +1,7 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 class libro(models.Model):
     nombre = models.CharField(max_length=100)
@@ -29,10 +32,6 @@ class persona(models.Model):
     def __str__(self):
 
         return f"Nombre: {self.nombre} -Edad: {self.edad} - Libros: {self.libros_preferidos} - Peliculas: {self.peliculas_preferidas}"
-
-
-
-
 
 
 

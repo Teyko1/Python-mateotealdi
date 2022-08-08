@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from libreria.models import persona, libro, pelicula
-from libreria.forms import libroformulario, peliculaformulario
+from libreria.forms import libroformulario, peliculaformulario,peliculafavorita
 
 
 def principal(request):
@@ -17,6 +17,17 @@ def libros(request):
         "libros": libros
     }
     return render(request, "libreria/libros.html", context)
+
+def peliculas(request):
+
+    peliculas = pelicula.objects.all()
+
+    context = {
+        "mensaje": "Todos nuestros Libros!",
+        "mensaje_bienvenida": "Bienvenid@s!",
+        "peliculas": peliculas
+    }
+    return render(request, "libreria/peliculas.html", context)
 
 
 def crear_pelicula(request):
@@ -34,6 +45,7 @@ def crear_pelicula(request):
         nueva_pelicula.save() 
  
         return render(request, "libreria/principal.html")
+
 
 def crear_libro(request):
 
@@ -96,11 +108,22 @@ def resultadopersona(request):
 
         return render(request, "libreria/resultadopersona.html", {"personas": persona_lista})
 
+
+def pelicula_preferida(request):
+
+    peliculas = peliculas.objects.all()
+
+    if request.method == "GET":
+        pelicula["nombre"] = peliculafavorita()
+        return render(request, "libreria/formulario.html", {"formulario_pelicula": pelicula["nombre"]})
+    else:
+        pelicula["nombre"] = request.POST["peliculas"]
     
+        pelicula_preferida = persona(peliculas_preferidas = pelicula["nombre"])
 
-
-
-
+        pelicula_preferida.save() 
+ 
+        return render(request, "libreria/resultadopersona/pelicula_preferida.html")
     
 
     

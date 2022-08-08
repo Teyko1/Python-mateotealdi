@@ -10,3 +10,7 @@ class peliculaformulario(Form):
     director = CharField(max_length=100)
     tematica = CharField(max_length=100)
     ano_estreno = IntegerField()
+
+class peliculafavorita(Form):
+    peliculas_preferidas = CharField(max_length=100)
+
