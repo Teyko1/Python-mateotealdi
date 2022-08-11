@@ -1,7 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from libreria.models import persona, libro, pelicula
 from libreria.forms import libroformulario, peliculaformulario,peliculafavorita
+
+#Autentificacion
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import authenticate, login, logout
 
 
 def principal(request):
@@ -34,7 +38,7 @@ def crear_pelicula(request):
 
     if request.method == "GET":
         formulario_pelicula = peliculaformulario()
-        return render(request, "libreria/formulario.html", {"formulario_pelicula": formulario_pelicula})
+        return render(request, "libreria/formulario.html", {"peliculafavorita": formulario_pelicula})
     else:
         nombre = request.POST["nombre"]
         director = request.POST["director"]
@@ -114,16 +118,55 @@ def pelicula_preferida(request):
     peliculas = peliculas.objects.all()
 
     if request.method == "GET":
-        pelicula["nombre"] = peliculafavorita()
-        return render(request, "libreria/formulario.html", {"formulario_pelicula": pelicula["nombre"]})
-    else:
-        pelicula["nombre"] = request.POST["peliculas"]
-    
-        pelicula_preferida = persona(peliculas_preferidas = pelicula["nombre"])
+        peliculafavorita = peliculafavorita()
 
-        pelicula_preferida.save() 
+        context = { "peliculafavorita" : peliculafavorita
+
+        }
+        return render(request, "libreria/formulario.html", context)
+    else:
+            peliculafavorita = peliculafavorita()
+    
+            peliculafavorita = persona(peliculafavorita = pelicula["nombre"])
+
+            peliculafavorita.save() 
  
-        return render(request, "libreria/resultadopersona/pelicula_preferida.html")
+            return render(request, "libreria/resultadopersona/pelicula_preferida.html")
+    
+
+def iniciar_sesion(request):
+    
+    if request.method == "GET":
+        formlogin = AuthenticationForm()
+
+        context = { "formlogin" : formlogin
+
+        }
+    
+        return render (request, "libreria/login.html", context)
+
+    else:
+        formlogin = AuthenticationForm(request, data=request.POST)
+
+        if formlogin.is_valid():
+            data = formlogin.cleaned_data
+
+            usuario = authenticate(username=data.get("username"), password=data.get("password"))
+
+            if usuario is not None:
+                login(request, usuario),
+                return redirect("principal")
+
+            else:
+                context = {
+
+                    "error" : "Credenciales no validas",
+                    "formlogin": formlogin
+                }
+
+                return render (request, "libreria/login.html", context)
+      
+
     
 
     

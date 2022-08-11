@@ -1,5 +1,5 @@
 from django.urls import path
-from libreria.views import busquedalibro, busquedapersona, pelicula_preferida, principal, pelicula, crear_pelicula, crear_libro, libros, busquedalibro, resultadolibro, busquedapersona, resultadopersona, peliculas
+from libreria.views import busquedalibro, busquedapersona, iniciar_sesion, pelicula_preferida, principal, pelicula, crear_pelicula, crear_libro, libros, busquedalibro, resultadolibro, busquedapersona, resultadopersona, peliculas
 
 urlpatterns = [
     path("principal/", principal, name="principal"),
@@ -11,7 +11,8 @@ urlpatterns = [
     path("resultadolibro/",resultadolibro, name="resultadolibro"),
     path("busquedapersona/", busquedapersona, name="busquedapersona"),
     path("resultadopersona/", resultadopersona, name ="resultadopersona"),
-    path("resultadopersona/pelicula_preferida/", pelicula_preferida, name="pelicula_preferida")
+    path("resultadopersona/pelicula_preferida/", pelicula_preferida, name="pelicula_preferida"),
+    path("login/", iniciar_sesion, name="iniciar_sesion"),
 
 
     
