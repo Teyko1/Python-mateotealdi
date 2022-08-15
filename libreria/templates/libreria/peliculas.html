@@ -13,9 +13,23 @@
     
     {% block pelicula %}
 
+    <h1 style="color: rgb(10, 10, 10)">Carga de peliculas a la biblioteca</h1>
+
+    <form method="post">{% csrf_token %}
+    
+        {{formulario_pelicula.as_p}}
+
+        <input type="submit" value="Crear">
+
+    </form>
+
     <h1 style="color: rgb(10, 10, 10)">Nombre de peliculas de la biblioteca</h1>
+
     {% for pelicula in peliculas %}
-    <p style="color: rgb(7, 7, 7)">{{pelicula.nombre}}</p>
+    <p style="color: rgb(7, 7, 7)">{{pelicula.nombre}}   
+        <a href="{% url 'borrarpelicula' pelicula.id %}"> Borrar </a>
+        <a href="{% url 'editarpelicula' pelicula.id %}"> Editar </a> </p>
+        
 {% endfor %}
     {% endblock %}
     
