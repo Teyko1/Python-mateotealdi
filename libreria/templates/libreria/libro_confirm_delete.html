@@ -1,0 +1,18 @@
+{% extends 'libreria/base.html' %}
+
+
+
+{% block contenido %}
+
+    <form method="post">{% csrf_token %}
+
+    <p>Desea borrar este registro?</p>
+    <input type="submit" value="Confirmar">
+    <a href="{% url 'libros' %}">Volver</a>
+    
+
+
+
+    </form>
+
+{% endblock contenido  %}

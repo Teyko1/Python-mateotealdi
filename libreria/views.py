@@ -2,27 +2,26 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from libreria.models import persona, libro, pelicula
 from libreria.forms import libroformulario, peliculaformulario,peliculafavorita
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 #Autentificacion
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import authenticate, login, logout
+from libreria.forms import creacionusuario
+
+#Mixing: permisos de usuario
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+#Decoradores: permisos de usuario para funciones
+from django.contrib.auth.decorators import login_required
+
 
 
 def principal(request):
     return render(request, "libreria/principal.html")
 
-def libros(request):
 
-    libros = libro.objects.all()
-
-    context = {
-        "mensaje": "Todos nuestros Libros!",
-        "mensaje_bienvenida": "Bienvenid@s!",
-        "libros": libros
-    }
-    return render(request, "libreria/libros.html", context)
-
+@login_required
 def peliculas(request):
     
     peliculas = pelicula.objects.all()
@@ -43,7 +42,7 @@ def peliculas(request):
         formulario_pelicula = peliculaformulario(request.POST)
         if formulario_pelicula.is_valid():
 
-            data = formulario_pelicula.cleaned_data
+
 
             nombre = request.POST["nombre"]
             director = request.POST["director"]
@@ -63,7 +62,7 @@ def peliculas(request):
  
         return render(request, "libreria/peliculas.html", context)
 
-
+@login_required
 def borrar_pelicula(request, idpelicula):
 
     try:
@@ -73,7 +72,7 @@ def borrar_pelicula(request, idpelicula):
     except:
         return HttpResponse(f"No se ha podido borrar la pelicula")
 
-
+@login_required
 def actualizar_pelicula(request, id_pelicula):
     if request.method =="GET":
         formulario_pelicula = peliculaformulario()
@@ -101,7 +100,7 @@ def actualizar_pelicula(request, id_pelicula):
 
         return redirect("peliculas")
 
-
+@login_required
 def crear_libro(request):
 
     if request.method == "GET":
@@ -129,7 +128,7 @@ def crear_libro(request):
     else:
         return HttpResponse("Formulario no valido")
 
-
+@login_required
 def busquedalibro(request):
     return render(request, "libreria/busquedalibro.html")
 
@@ -147,9 +146,11 @@ def resultadolibro(request):
         return render(request, "libreria/resultadolibro.html", {"libros": libros_lista})
 
 
+@login_required
 def busquedapersona(request):
     return render(request, "libreria/busquedapersona.html")
 
+@login_required
 def resultadopersona(request):
 
     persona_nombre = request.GET.get("nombre", None)
@@ -163,7 +164,7 @@ def resultadopersona(request):
 
         return render(request, "libreria/resultadopersona.html", {"personas": persona_lista})
 
-
+@login_required
 def pelicula_preferida(request):
 
     peliculas = peliculas.objects.all()
@@ -209,20 +210,66 @@ def iniciar_sesion(request):
                 return redirect("principal")
 
             else:
-                context = {
 
-                    "error" : "Credenciales no validas",
+                context= {
+                    "error": "Credenciales no validas",
                     "formlogin": formlogin
-                }
-
+                    }
+             
                 return render (request, "libreria/login.html", context)
-      
+        else:
 
-    
+            context= {
+                    "error": "Formulario no valido",
+                    "formlogin": formlogin
+                    }
+             
+            return render (request, "libreria/login.html", context)
 
-    
+def registrar_usuario(request):
+    if request.method == "GET":
+        formulario = creacionusuario()
+        return render(request, "libreria/registro.html", {"formulario": formulario}) 
+
+    else:
+        formulario = creacionusuario(request.POST)
+
+        if formulario.is_valid():
+            formulario.save()
+            return redirect("principal")
+        else:
+            return render(request, "libreria/registro.html", {"formulario": formulario,"error":"Formulario no valido"})
 
 
-class librosLisr(ListView):
+
+
+
+class LibrosList(LoginRequiredMixin, ListView):
     model = libro
     template_name = "libreria/libros_list.html"
+
+
+class LibrosCreate(LoginRequiredMixin, CreateView):
+    model = libro
+    success_url = "/libreria/libros/"
+    fields = ["nombre", "autor", "categoria"]
+
+
+class LibrosUpdate(LoginRequiredMixin, UpdateView):
+    model = libro
+    success_url = "/libreria/libros/"
+    fields = ["nombre", "autor", "categoria"]
+
+class LibrosDelete(LoginRequiredMixin, DeleteView):
+    model = libro
+    success_url = "/libreria/libros/"
+
+
+
+@login_required
+def editar_usuario(request):
+    if request.method == "GET":
+        return render(request, "libreria/editarusuario.html", {"form": None})
+
+
+

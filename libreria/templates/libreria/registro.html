@@ -1,0 +1,15 @@
+{% extends 'libreria/base.html' %}
+
+{% block contenido %}
+
+<form method="post">{% csrf_token %}
+
+{{formulario.as_p}}
+
+<input type="submit" value="Registrarse">
+
+
+</form>
+
+
+{% endblock %}
