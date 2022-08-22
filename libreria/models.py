@@ -1,3 +1,4 @@
+from distutils.command.upload import upload
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
@@ -34,5 +35,9 @@ class persona(models.Model):
         return f"Nombre: {self.nombre} -Edad: {self.edad} - Libros: {self.libros_preferidos} - Peliculas: {self.peliculas_preferidas}"
 
 
-
+class Avatar(models.Model):
+    #vinculo con el usuario
+    user = models.ForeignKey(User, on_delete= models.CASCADE)
+    #Subcarpeta de avatares
+    imagen = models.ImageField(upload_to= "avatares", null= True, blank= True)
 

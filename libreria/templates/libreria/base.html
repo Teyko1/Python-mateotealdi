@@ -28,17 +28,33 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto py-4 py-lg-0">
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'principal' %}">Home</a></li>
+
+                        {% if request.user.is_authenticated %}
+                        
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'libros' %}">Libros</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'peliculas' %}">Peliculas</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'busquedapersona' %}">Mi biblioteca</a></li>
-                        <a class="btn btn-primary" href="{% url 'registrate' %}">Registrate</a>
-                        <a class="btn btn-primary" href="{% url 'iniciar_sesion' %}">Iniciar sesion</a>
                         <a class="btn btn-primary" href="{% url 'logout' %}">Cerrar Sesion</a>
+                        
+                        {% else %}
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'principal' %}">Inicio</a></li>
+                        <a class="btn btn-primary" href="{% url 'iniciar_sesion' %}">Iniciar sesion</a>
+                        <a class="btn btn-primary" href="{% url 'registrate' %}">Registrate</a>
+                        
+
+                        {% endif %}
+
+                        <img src="{{imagen}}" alt="Avatar">
+
+                        
+
                     </ul>
                 </div>
             </div>
         </nav>
+
+        
+
         <!-- Page Header-->
         <header class="masthead" style="background-image: url('../../static/libreria/assets/img/home-bg.jpg')">
             <div class="container position-relative px-4 px-lg-5">

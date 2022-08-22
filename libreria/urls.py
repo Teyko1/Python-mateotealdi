@@ -1,6 +1,6 @@
 from unicodedata import name
 from django.urls import path
-from libreria.views import registrar_usuario, LibrosDelete, LibrosUpdate, LibrosCreate, LibrosList, actualizar_pelicula, borrar_pelicula, busquedalibro, busquedapersona, iniciar_sesion, pelicula_preferida, principal, pelicula, crear_libro, busquedalibro, registrar_usuario, resultadolibro, busquedapersona, resultadopersona, peliculas
+from libreria.views import editar_usuario, registrar_usuario, LibrosDelete, LibrosUpdate, LibrosCreate, LibrosList, actualizar_pelicula, borrar_pelicula, busquedalibro, busquedapersona, iniciar_sesion, pelicula_preferida, principal, pelicula, crear_libro, busquedalibro, registrar_usuario, resultadolibro, busquedapersona, resultadopersona, peliculas
 from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
@@ -17,6 +17,7 @@ urlpatterns = [
     path("login/", iniciar_sesion, name="iniciar_sesion"),
     path("registrarse/", registrar_usuario, name="registrate"),
     path("logout/",LogoutView.as_view(template_name="libreria/logout.html"), name="logout"),
+    path("editarusuario/", editar_usuario, name= "editarusuario"),
 
     path("peliculas/borrar/<idpelicula>/", borrar_pelicula, name="borrarpelicula"),
     path("peliculas/editar/<id_pelicula>/", actualizar_pelicula, name="editarpelicula"),

@@ -1,13 +1,13 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from libreria.models import persona, libro, pelicula
+from libreria.models import persona, libro, pelicula, Avatar
 from libreria.forms import libroformulario, peliculaformulario,peliculafavorita
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 #Autentificacion
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import authenticate, login, logout
-from libreria.forms import creacionusuario
+from libreria.forms import creacionusuario, UserEditForm
 
 #Mixing: permisos de usuario
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -16,9 +16,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 
 
-
+@login_required
 def principal(request):
-    return render(request, "libreria/principal.html")
+
+    avatar = Avatar.objects.filter(user=request.user).first()
+
+    context = {"imagen": avatar.imagen.url}
+
+    return render(request, "libreria/principal.html", context)
 
 
 @login_required
@@ -269,7 +274,32 @@ class LibrosDelete(LoginRequiredMixin, DeleteView):
 @login_required
 def editar_usuario(request):
     if request.method == "GET":
-        return render(request, "libreria/editarusuario.html", {"form": None})
+        form = UserEditForm(initial={"username": request.user.username, "first_name": request.user.first_name, "last_name": request.user.last_name})
+        return render(request, "libreria/editarusuario.html", {"form": form})
+
+    else:
+        form= UserEditForm(request.POST)
+        if form.is_valid():
+            data= form.cleaned_data
+
+            usuario = request.user
+            usuario.email = data["email"]
+            usuario.password1 = data["password1"]
+            usuario.password2 = data["password2"]
+            usuario.first_name = data["first_name"]
+            usuario.last_name = data["last_name"]
+
+
+            usuario.save()
+
+            return redirect("principal")
+
+    return render(request, "libreria/editarusuario.html", {"form": form})
+
+
+
+
+
 
 
 
