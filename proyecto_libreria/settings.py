@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-_j8fl=+c-bfz(-*hqlvi+d9az-9*5^$nm&2__e0qsbkd0k)nbg'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["https://salty-taiga-34267.herokuapp.com/"]
 
@@ -123,7 +123,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static/libreria/'),)
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'C:\Python 3.10\proyecto_libreria\libreria\static\libreria'),)
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
