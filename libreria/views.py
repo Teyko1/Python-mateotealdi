@@ -1,13 +1,14 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from libreria.models import persona, libro, pelicula, Avatar
-from libreria.forms import libroformulario, peliculaformulario,peliculafavorita
+from libreria.forms import libroformulario, peliculaformulario,peliculafavorita, Avatarform
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 #Autentificacion
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from libreria.forms import creacionusuario, UserEditForm
+from django.contrib.auth.models import User
 
 #Mixing: permisos de usuario
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -295,6 +296,30 @@ def editar_usuario(request):
             return redirect("principal")
 
     return render(request, "libreria/editarusuario.html", {"form": form})
+
+@login_required
+def agregar_avatar(request):
+    if request.method == "GET":
+        form = Avatarform()
+        context = {"form": form}
+        return render(request, "libreria/agregar_avatar.html", context)
+
+    else:
+        form = Avatarform(request.POST, request.FILES)
+
+        if form.is_valid():
+            data= form.cleaned_data
+
+            usuario= User.objects.filter(username=request.user.username).first()
+            avatar = Avatar(user=usuario, imagen= data["imagen"])
+            avatar.save()
+
+        return render(request, "libreria/principal.html")
+        
+
+
+        
+
 
 
 

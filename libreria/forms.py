@@ -1,5 +1,5 @@
 from tkinter import Label, Widget
-from django.forms import Form, IntegerField, CharField, EmailField, PasswordInput
+from django.forms import Form, IntegerField, CharField, EmailField, PasswordInput, ImageField
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
@@ -43,3 +43,6 @@ class UserEditForm(UserCreationForm):
         fields = ["last_name", "first_name" ,"email", "password1", "password2"]
         help_texts = {k:"" for k in fields}
 
+
+class Avatarform(Form):
+    imagen= ImageField()
