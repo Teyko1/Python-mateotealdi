@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-_j8fl=+c-bfz(-*hqlvi+d9az-9*5^$nm&2__e0qsbkd0k)nbg'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["https://salty-taiga-34267.herokuapp.com/"]
 
