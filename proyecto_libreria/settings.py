@@ -123,7 +123,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'C:\Python 3.10\proyecto_libreria\static'),)
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static/libreria/'),)
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
