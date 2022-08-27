@@ -7,10 +7,13 @@
 <form method="post">{% csrf_token %}
 
     {{form.as_p}}
+    <a class="btn btn-primary" href="{% url 'agregaravatar'  %}">Editar Avatar</a>
 
     <input type="submit", value="Editar">
 
 </form>
+
+
 
 
 {% endblock %}

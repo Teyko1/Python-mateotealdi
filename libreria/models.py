@@ -8,6 +8,7 @@ class libro(models.Model):
     nombre = models.CharField(max_length=100)
     autor = models.CharField(max_length=100)
     categoria = models.CharField(max_length=200)
+    tapa = models.ImageField(null= True, blank= True)
 
     def __str__(self):
 

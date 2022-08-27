@@ -23,8 +23,10 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("inicio/", index),
-    path("libreria/", include("libreria.urls"))
+    path("", index),
+    path("libreria/", include("libreria.urls")),
+    path("chat/", include("chat.urls")),
+ 
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)

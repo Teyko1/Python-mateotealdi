@@ -31,6 +31,7 @@ def principal(request):
 def peliculas(request):
     
     peliculas = pelicula.objects.all()
+    avatar = Avatar.objects.filter(user=request.user).first()
 
     if request.method == "GET":
         formulario_pelicula = peliculaformulario()
@@ -40,7 +41,8 @@ def peliculas(request):
             "mensaje": "Todos nuestras Peliculas!",
             "mensaje_bienvenida": "Bienvenid@s!",
             "peliculas": peliculas,
-            "formulario_pelicula": formulario_pelicula
+            "formulario_pelicula": formulario_pelicula,
+            "imagen": avatar.imagen.url
         }
         return render(request, "libreria/peliculas.html", context)
 
@@ -246,13 +248,16 @@ def registrar_usuario(request):
         else:
             return render(request, "libreria/registro.html", {"formulario": formulario,"error":"Formulario no valido"})
 
+def sobremi(request):
 
+    return render(request, "libreria/sobremi.html")
 
 
 
 class LibrosList(LoginRequiredMixin, ListView):
     model = libro
     template_name = "libreria/libros_list.html"
+    
 
 
 class LibrosCreate(LoginRequiredMixin, CreateView):
@@ -264,7 +269,7 @@ class LibrosCreate(LoginRequiredMixin, CreateView):
 class LibrosUpdate(LoginRequiredMixin, UpdateView):
     model = libro
     success_url = "/libreria/libros/"
-    fields = ["nombre", "autor", "categoria"]
+    fields = ["nombre", "autor", "categoria", "tapa"]
 
 class LibrosDelete(LoginRequiredMixin, DeleteView):
     model = libro

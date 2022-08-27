@@ -7,6 +7,7 @@ class libroformulario(Form):
     nombre = CharField(max_length=100)
     autor = CharField(max_length=100)
     categoria = CharField(max_length=200) 
+    tapa = ImageField()
 
 class peliculaformulario(Form):
     nombre = CharField(max_length=100)

@@ -25,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-_j8fl=+c-bfz(-*hqlvi+d9az-9*5^$nm&2__e0qsbkd0k)nbg'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ["https://salty-taiga-34267.herokuapp.com/"]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'libreria',
+    'chat',
+    
 ]
 
 MIDDLEWARE = [

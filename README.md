@@ -1,6 +1,9 @@
 # Python-mateotealdi
+
+Autor: Mateo Tealdi
  
 La pagina a desarrollar tiene por objetivo crear una biblioteca virtual para libros y peliculas en la cual una persona puede llevar un registro de los mismos.
+
 
 La web posee los siguientes enlaces a paginas:
 

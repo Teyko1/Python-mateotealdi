@@ -6,7 +6,7 @@
     <a class="btn btn-primary" href="{% url 'crearlibro'  %}">Crear libro</a>
 
     {% for libro in object_list %}
-    <p>{{libro}} <a href="{% url 'actualizarlibro' libro.id %}"> Actualizar </a> <a href="{% url 'borrarlibro' libro.id %}"> Borrar </a> </p>
+    <p>{{libro.nombre}} - {{libro.tapa}}<a href="{% url 'actualizarlibro' libro.id %}"> Ver mas-Actualizar </a> <a href="{% url 'borrarlibro' libro.id %}"> Borrar </a> </p>
     {% endfor %}
 
 
