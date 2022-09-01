@@ -36,13 +36,11 @@
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'libros' %}">Libros</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'peliculas' %}">Peliculas</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'busquedapersona' %}">Mi biblioteca</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'sobremi' %}">Sobre mi...</a></li>
                         <a class="btn btn-primary" href="{% url 'logout' %}">Cerrar Sesion</a>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'editarusuario' %}">Editar usuario</a></li>
                         
                         {% else %}
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'principal' %}">Inicio</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'sobremi' %}">Sobre mi...</a></li>
                         <a class="btn btn-primary" href="{% url 'iniciar_sesion' %}">Iniciar sesion</a>
                         <a class="btn btn-primary" href="{% url 'registrate' %}">Registrate</a>
                         
@@ -68,6 +66,7 @@
                         <div class="site-heading">
                             <h1>Bienvenidos</h1>
                             <span class="subheading">Tu biblioteca personal {{user.first_name}}</span>
+                            <span class="text">Inicie sesion y visite nuestro chatroom "Mi biblioteca" para ver opiniones sobre libros y peliculas para incorporar a su libreria</span>
                         </div>
                     </div>
                 </div>

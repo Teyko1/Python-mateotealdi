@@ -73,7 +73,7 @@ $(document).ready(function(){
 setInterval(function(){
     $.ajax({
         type: 'GET',
-        url : "getmessages/{{room}}/",
+        url : "/chat/getmessages/{{room}}/",
         success: function(response){
             console.log(response);
             $("#display").empty();
@@ -126,7 +126,7 @@ setInterval(function(){
     }
     </style>
 
-    <form id="post-form">
+    <form id="post-form" >
         {% csrf_token %}
         <input type="hidden" name="username" id="username" value="{{username}}"/>
         <input type="hidden" name="room_id" id="room_id" value="{{room_details.id}}"/>
@@ -144,7 +144,7 @@ setInterval(function(){
 
     $.ajax({
       type:'POST',
-      url:'/send',
+      url:'/chat/send',
       data:{
           username:$('#username').val(),
           room_id:$('#room_id').val(),

@@ -15,8 +15,12 @@ class peliculaformulario(Form):
     tematica = CharField(max_length=100)
     ano_estreno = IntegerField()
 
+
 class peliculafavorita(Form):
     peliculas_preferidas = CharField(max_length=100)
+
+class Avatarform(Form):
+    imagen= ImageField()
 
 
 class creacionusuario(UserCreationForm):
@@ -24,6 +28,7 @@ class creacionusuario(UserCreationForm):
     email = EmailField()
     password1 = CharField(label= "Contraseña", widget=PasswordInput)
     password2 = CharField(label= "Confirmar contraseña", widget=PasswordInput)
+    
 
     class Meta:
         model = User
@@ -45,5 +50,3 @@ class UserEditForm(UserCreationForm):
         help_texts = {k:"" for k in fields}
 
 
-class Avatarform(Form):
-    imagen= ImageField()

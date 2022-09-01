@@ -23,7 +23,8 @@ def principal(request):
     avatar = Avatar.objects.filter(user=request.user).first()
 
     context = {"imagen": avatar.imagen.url}
-
+    
+    
     return render(request, "libreria/principal.html", context)
 
 
@@ -156,7 +157,11 @@ def resultadolibro(request):
 
 @login_required
 def busquedapersona(request):
-    return render(request, "libreria/busquedapersona.html")
+
+    avatar = Avatar.objects.filter(user=request.user).first()
+
+    context = {"imagen": avatar.imagen.url}
+    return render(request, "libreria/busquedapersona.html", context)
 
 @login_required
 def resultadopersona(request):
