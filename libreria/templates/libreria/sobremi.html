@@ -18,7 +18,7 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{% static 'libreria/css/styles.css' %}" rel="stylesheet" />
     </head>
-    <body>
+    <body style="font-family: 'Dosis', sans-serif;">
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
             <div class="container px-4 px-lg-5">
@@ -28,28 +28,31 @@
                     <i class="fas fa-bars"></i>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ms-auto py-4 py-lg-0">
+                    <ul class="navbar-nav ms-auto py-4 py-lg-0" style="color: white;">
 
                         {% if request.user.is_authenticated %}
                         
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'principal' %}">Inicio</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'libros' %}">Libros</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'peliculas' %}">Peliculas</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'busquedapersona' %}">Mi biblioteca</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'home' %}">Chat</a></li>
-                        <a class="btn btn-primary" href="{% url 'logout' %}">Cerrar Sesion</a>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'editarusuario' %}">Editar usuario</a></li>
-                        
+                        <li ><a class="nav-link text-light px-lg-4 py-3 py-lg-4" href="{% url 'principal' %}">Inicio</a></li>
+                        <li ><a class="nav-link text-light px-lg-4 py-3 py-lg-4" href="{% url 'libros' %}">Libros</a></li>
+                        <li ><a class="nav-link text-light px-lg-4 py-3 py-lg-4" href="{% url 'peliculas' %}">Películas</a></li>
+                        <li ><a class="nav-link  text-light px-lg-4 py-3 py-lg-4" href="{% url 'home' %}">Chat</a></li>
+                        <li ><a class="nav-link text-light px-lg-4 py-3 py-lg-4" href="{% url 'editarusuario' %}">Editar usuario</a></li>
+                        <li><a class="nav-link my-3 my-lg-3"
+                            style="background-color: rgba(255, 255, 255, 0.3); border-radius: 5px;"
+                            href="{% url 'logout' %}">Cerrar sesión</a></li>
+                        <li class="px-lg-4 py-3">
+                            
+                            <img 
+                            style="width: 50px; height: 50px; 
+                            border-radius:50%" src="{{imagen}}" alt="avatar"></li>
+
                         {% else %}
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'principal' %}">Inicio</a></li>
-                        <a class="btn btn-primary" href="{% url 'iniciar_sesion' %}">Iniciar sesion</a>
-                        <a class="btn btn-primary" href="{% url 'registrate' %}">Registrate</a>
+                        <a class="btn btn-primary" href="{% url 'iniciar_sesion' %}">Iniciar sesión</a>
+                        <a class="btn btn-primary" href="{% url 'registrate' %}">Registro</a>
                         
 
                         {% endif %}
-
-                        <img style="width; 70px; height:70px; border-radius:50%" src="{{imagen}}" alt="avatar">
-
                         
 
                     </ul>
@@ -64,12 +67,12 @@
             <div class="container position-relative px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
-                        <div class="site-heading">
-                            <h1>Bienvenido</h1>
-                            <span class="subheading">Sobre mi...</span>
-                            <span class="text">Mi nombre es Mateo Tealdi, soy Licenciado en administracion y hace un tiempo empeze a aprender a programar para pdoer realizar proyectos de data science y para seguir aprendiendo sobre el lenguaje mas utilizado para este tipo de carrera fue que decidi anotarme al curso de python...</span>
-                        </div>
-                            <span class="text">Este proyecto esta orientado a crear una libreria personal en lo que respecta a peliculas y libros y establecer de los libros creados por los usuarios, cuales serian los que ya tengo en mi propia Biblioteca o desearia adquirir para tener en un futuro, a su vez poder compartir opiniones sobre el tema con los miembros de la web a través del chat</span>
+                        <div class="site-heading" style="font-family: Open Sans">
+                            <h2>Bienvenido</h2>
+                            <h4>Sobre mí:</h4>
+                            <p>Mi nombre es Mateo Tealdi, soy Licenciado en Administración y hace un tiempo empecé a aprender a programar para poder realizar proyectos de Data Science. Para seguir aprendiendo sobre el lenguaje más utilizado para este tipo de carrera, fue que decidí anotarme al curso de Python.</p>
+
+                            <span class="text">Este proyecto está orientado a crear una libreria personal en lo que respecta a peliculas y libros, y establecer, de los libros creados por los usuarios, cuáles serían los que ya tengo en mi propia biblioteca o que desearía adquirir para tener en un futuro. A su vez, permite compartir opiniones sobre el tema con miembros de la web a través del chat.</span>
                         </div>
                     </div>
                 </div>
@@ -114,7 +117,9 @@
                                         <i class="fab fa-github fa-stack-1x fa-inverse"></i>
                                     </span>
                                 </a>
-                                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'sobremi' %}">Sobre mi...</a></li>
+                                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" 
+                                    href="{% url 'sobremi' %}">Sobre mí</a>
+                                </li>
                             </li>
                         </ul>
                         <div class="small text-center text-muted fst-italic">Copyright &copy; Mi libreria 2022</div>

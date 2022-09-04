@@ -1,13 +1,79 @@
-{% extends 'libreria/principal.html' %}
+{% extends 'libreria/principal.html' %} {% block contenido %}
 
-{% block contenido %}
+<div style="width: 100%; display: flex; justify-content: flex-end; padding-right: 15px;">
+<button
+style="
+  border-radius: 5px;
+  border: none;
+  padding: 5px 10px;
+  font-size: 1rem;
+  margin: 15px 0px;
+  background-color: #BDE4F2;
+"
+>
+<a href="{% url 'crearlibro'  %}">Agregar libro</a>
+</button>
+</div>
 
+<div style="display: flex; width: 100%; flex-wrap: wrap; align-items: center; justify-content: center;
+padding-bottom: 100px;
+">
+  {% for libro in object_list %}
 
-    <a class="btn btn-primary" href="{% url 'crearlibro'  %}">Crear libro</a>
+  <div
+    style="
+      display: flex;
+      flex-direction: column;
+      padding: 15px;
+      align-items: center;
+      justify-content: center;
+      margin: 15px;
+      border-radius: 10px;
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      width: 23%;
+      height: 350px;
+    "
+  >
+    {% if libro.tapa %}
+    <img
+      style="width: auto; max-width: 100%; height: auto; max-height: 50%;"
+      src="../../media/{{libro.tapa}}"
+      alt="{{libro.tapa}}"
+    />
+    {% else %}
+    <img
+    style="width: auto; max-width: 100%; height: auto; max-height: 50%;"
+    src="../../../static/libreria/assets/img/book.jpg" alt="libro" />
+    {% endif %}
 
-    {% for libro in object_list %}
-    <p>{{libro.nombre}} - {{libro.tapa}}<a href="{% url 'actualizarlibro' libro.id %}"> Ver mas-Actualizar </a> <a href="{% url 'borrarlibro' libro.id %}"> Borrar </a> </p>
-    {% endfor %}
+    <p style="font-size: 2rem; text-transform: capitalize">{{libro.nombre}}</p>
 
+    <span>
+      <button
+        style="
+          border-radius: 5px;
+          border: none;
+          padding: 5px 10px;
+          font-size: 1rem;
+        "
+      >
+        <a href="{% url 'actualizarlibro' libro.id %}">Editar</a>
+      </button>
+      <button
+        style="
+          border-radius: 5px;
+          border: none;
+          padding: 5px 10px;
+          font-size: 1rem;
+          background-color: #FFC1B3;
+        "
+      >
+        <a href="{% url 'borrarlibro' libro.id %}">Borrar</a>
+      </button>
+    </span>
+  </div>
+
+  {% endfor %}
+</div>
 
 {% endblock %}

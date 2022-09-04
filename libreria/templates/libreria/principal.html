@@ -13,12 +13,13 @@
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
         <!-- Google fonts-->
-        <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{% static 'libreria/css/styles.css' %}" rel="stylesheet" />
     </head>
-    <body>
+    <body style="font-family: 'Dosis', sans-serif;">
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
             <div class="container px-4 px-lg-5">
@@ -28,28 +29,33 @@
                     <i class="fas fa-bars"></i>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ms-auto py-4 py-lg-0">
+                    <ul class="navbar-nav ms-auto py-4 py-lg-0" style="color: white;">
 
                         {% if request.user.is_authenticated %}
                         
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'principal' %}">Inicio</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'libros' %}">Libros</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'peliculas' %}">Peliculas</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'busquedapersona' %}">Mi biblioteca</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'home' %}">Chat</a></li>
-                        <a class="btn btn-primary" href="{% url 'logout' %}">Cerrar Sesion</a>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'editarusuario' %}">Editar usuario</a></li>
-                        
+                        <li ><a class="nav-link text-light px-lg-4 py-3 py-lg-4" href="{% url 'principal' %}">Inicio</a></li>
+                        <li ><a class="nav-link text-light px-lg-4 py-3 py-lg-4" href="{% url 'libros' %}">Libros</a></li>
+                        <li ><a class="nav-link text-light px-lg-4 py-3 py-lg-4" href="{% url 'peliculas' %}">Películas</a></li>
+                        <li ><a class="nav-link  text-light px-lg-4 py-3 py-lg-4" href="{% url 'home' %}">Chat</a></li>
+                        <li ><a class="nav-link text-light px-lg-4 py-3 py-lg-4" href="{% url 'editarusuario' %}">Editar usuario</a></li>
+                        <li><a class="nav-link my-3 my-lg-3"
+                            style="background-color: rgba(255, 255, 255, 0.3); border-radius: 5px;"
+                            href="{% url 'logout' %}">Cerrar sesión</a></li>
+                        <li class="px-lg-4 py-3">
+
+                            {% if imagen %}
+                            <img 
+                            style="width: 50px; height: 50px; 
+                            border-radius:50%" src="{{imagen}}" alt="avatar"></li>
+                            {% endif %}
+
                         {% else %}
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'principal' %}">Inicio</a></li>
-                        <a class="btn btn-primary" href="{% url 'iniciar_sesion' %}">Iniciar sesion</a>
-                        <a class="btn btn-primary" href="{% url 'registrate' %}">Registrate</a>
+                        <a class="btn btn-primary" href="{% url 'iniciar_sesion' %}">Iniciar sesión</a>
+                        <a class="btn btn-primary" href="{% url 'registrate' %}">Registro</a>
                         
 
                         {% endif %}
-
-                        <img style="width; 70px; height:70px; border-radius:50%" src="{{imagen}}" alt="avatar">
-
                         
 
                     </ul>
@@ -65,8 +71,9 @@
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <div class="site-heading">
-                            <h1>Bienvenidos</h1>
-                            <span class="subheading">Tu biblioteca personal {{user.first_name}}</span>
+                            <h1>Tu biblioteca</h1>
+                            <span class="subheading">¡Te damos la bienvenida {{user.first_name}}!</span>
+                            <span class="subheading">Ingresa al room "Mi biblioteca" en nuestro chat para poder intercambiar opiniones</span>
                             
                         </div>
                     </div>
@@ -112,7 +119,9 @@
                                         <i class="fab fa-github fa-stack-1x fa-inverse"></i>
                                     </span>
                                 </a>
-                                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'sobremi' %}">Sobre mi...</a></li>
+                                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" 
+                                    href="{% url 'sobremi' %}">Sobre mí</a>
+                                </li>
                             </li>
                         </ul>
                         <div class="small text-center text-muted fst-italic">Copyright &copy; Mi libreria 2022</div>

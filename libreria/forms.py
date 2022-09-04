@@ -1,23 +1,23 @@
+from re import I
 from tkinter import Label, Widget
 from django.forms import Form, IntegerField, CharField, EmailField, PasswordInput, ImageField
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from .models import libro, pelicula
+from django import forms
 
-class libroformulario(Form):
-    nombre = CharField(max_length=100)
-    autor = CharField(max_length=100)
-    categoria = CharField(max_length=200) 
-    tapa = ImageField()
+class libroformulario(forms.ModelForm):
+    class Meta:
+        model = libro
+        fields = ['nombre', 'autor', 'categoria',  'tapa']
 
-class peliculaformulario(Form):
-    nombre = CharField(max_length=100)
-    director = CharField(max_length=100)
-    tematica = CharField(max_length=100)
-    ano_estreno = IntegerField()
+class peliculaformulario(forms.ModelForm):
+
+    class Meta:
+        model = pelicula
+        fields = ['nombre', 'director', 'tematica', 'ano_estreno', 'tapa']
 
 
-class peliculafavorita(Form):
-    peliculas_preferidas = CharField(max_length=100)
 
 class Avatarform(Form):
     imagen= ImageField()

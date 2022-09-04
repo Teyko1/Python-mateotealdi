@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from libreria.models import persona, libro, pelicula, Avatar
-from libreria.forms import libroformulario, peliculaformulario,peliculafavorita, Avatarform
+from libreria.models import libro, pelicula, Avatar
+from libreria.forms import libroformulario, peliculaformulario, Avatarform
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 #Autentificacion
@@ -19,12 +19,10 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def principal(request):
-
-    avatar = Avatar.objects.filter(user=request.user).first()
-
-    context = {"imagen": avatar.imagen.url}
-    
-    
+    avatar = request.user.avatar.order_by('-pk').first()
+    context = {}
+    if avatar:
+        context["imagen"] = avatar.imagen.url
     return render(request, "libreria/principal.html", context)
 
 
@@ -32,11 +30,10 @@ def principal(request):
 def peliculas(request):
     
     peliculas = pelicula.objects.all()
-    avatar = Avatar.objects.filter(user=request.user).first()
+    avatar = request.user.avatar.order_by('-pk').first()
 
     if request.method == "GET":
         formulario_pelicula = peliculaformulario()
-
 
         context = {
             "mensaje": "Todos nuestras Peliculas!",
@@ -48,16 +45,15 @@ def peliculas(request):
         return render(request, "libreria/peliculas.html", context)
 
     else:
-        formulario_pelicula = peliculaformulario(request.POST)
+        formulario_pelicula = peliculaformulario(request.POST, request.FILES)
         if formulario_pelicula.is_valid():
-
-
 
             nombre = request.POST["nombre"]
             director = request.POST["director"]
             tematica = request.POST["tematica"] 
             ano_estreno = request.POST["ano_estreno"]
-            nueva_pelicula = pelicula(nombre = nombre, director = director, tematica = tematica, ano_estreno = ano_estreno)
+            tapa = request.FILES["tapa"]
+            nueva_pelicula = pelicula(nombre = nombre, director = director, tematica = tematica, ano_estreno = ano_estreno, tapa = tapa)
 
             nueva_pelicula.save() 
             formulario_pelicula = peliculaformulario()
@@ -81,123 +77,35 @@ def borrar_pelicula(request, idpelicula):
     except:
         return HttpResponse(f"No se ha podido borrar la pelicula")
 
-@login_required
-def actualizar_pelicula(request, id_pelicula):
-    if request.method =="GET":
-        formulario_pelicula = peliculaformulario()
 
-        context = {"formulario_pelicula" : formulario_pelicula
-
-        }
-
-        return render(request, "libreria/actualizarpelicula.html", context)
-
-    else:
-        formulario_pelicula = peliculaformulario(request.POST)
-
-        if formulario_pelicula.is_valid():
-            data= formulario_pelicula.cleaned_data
-
-            try:
-                movie = pelicula.objects.get(id = id_pelicula)
-
-                movie.nombre = data.get("nombre")
-                movie.save()
-        
-            except:
-                return HttpResponse(f"No se pudo actualizar")
-
-        return redirect("peliculas")
-
+  
 @login_required
 def crear_libro(request):
 
     if request.method == "GET":
-        formulario = libroformulario()
-        return render(request, "libreria/formlibro.html", {"formulario_libro":formulario})
+        formulario_libro = libroformulario()
+        return render(request, "libreria/formlibro.html", {"formulario_libro":formulario_libro})
     else:
 
-        formulario = libroformulario(request.POST)
+        formulario_libro = libroformulario(request.POST, request.FILES)
 
-    if formulario.is_valid():
-        data = formulario.cleaned_data
-        print(data)
+    if formulario_libro.is_valid():
+   
+    
+        nombre = request.POST["nombre"]
+        autor = request.POST["autor"]
+        categoria = request.POST["categoria"]
+        tapa = request.FILES["tapa"]
 
-
-        nombre = data["nombre"]
-        autor = data["autor"]
-        categoria = data["categoria"] 
-        
-        nuevo_libro = libro(nombre = nombre, autor = autor, categoria = categoria)
+        nuevo_libro = libro(nombre = nombre, autor = autor, categoria = categoria, tapa = tapa)
 
         nuevo_libro.save() 
  
-        return render(request, "libreria/principal.html")
+        return render(request, "libreria/principal.html", {"formulario_libro":formulario_libro})
 
     else:
         return HttpResponse("Formulario no valido")
 
-@login_required
-def busquedalibro(request):
-    return render(request, "libreria/busquedalibro.html")
-
-def resultadolibro(request):
-
-    libro_nombre = request.GET.get("Libro", None)
-
-    if not libro_nombre:
-        return HttpResponse("No existe ese libro o no lo indicaste correctamente")
-    
-    else:
-
-        libros_lista = libro.objects.filter(nombre__icontains=libro_nombre)
-
-        return render(request, "libreria/resultadolibro.html", {"libros": libros_lista})
-
-
-@login_required
-def busquedapersona(request):
-
-    avatar = Avatar.objects.filter(user=request.user).first()
-
-    context = {"imagen": avatar.imagen.url}
-    return render(request, "libreria/busquedapersona.html", context)
-
-@login_required
-def resultadopersona(request):
-
-    persona_nombre = request.GET.get("nombre", None)
-
-    if not persona_nombre:
-        return HttpResponse("No existe esa persona o no lo indicaste correctamente")
-    
-    else:
-
-        persona_lista = persona.objects.all()
-
-        return render(request, "libreria/resultadopersona.html", {"personas": persona_lista})
-
-@login_required
-def pelicula_preferida(request):
-
-    peliculas = peliculas.objects.all()
-
-    if request.method == "GET":
-        peliculafavorita = peliculafavorita()
-
-        context = { "peliculafavorita" : peliculafavorita
-
-        }
-        return render(request, "libreria/formulario.html", context)
-    else:
-            peliculafavorita = peliculafavorita()
-    
-            peliculafavorita = persona(peliculafavorita = pelicula["nombre"])
-
-            peliculafavorita.save() 
- 
-            return render(request, "libreria/resultadopersona/pelicula_preferida.html")
-    
 
 def iniciar_sesion(request):
     
@@ -254,8 +162,12 @@ def registrar_usuario(request):
             return render(request, "libreria/registro.html", {"formulario": formulario,"error":"Formulario no valido"})
 
 def sobremi(request):
+    avatar = request.user.avatar.order_by('-pk').first()
+    context = {}
+    if avatar:
+        context["imagen"] = avatar.imagen.url
 
-    return render(request, "libreria/sobremi.html")
+    return render(request, "libreria/sobremi.html", context)
 
 
 
@@ -268,13 +180,19 @@ class LibrosList(LoginRequiredMixin, ListView):
 class LibrosCreate(LoginRequiredMixin, CreateView):
     model = libro
     success_url = "/libreria/libros/"
-    fields = ["nombre", "autor", "categoria"]
+    fields = ["nombre", "autor", "categoria", "tapa"]
 
 
 class LibrosUpdate(LoginRequiredMixin, UpdateView):
     model = libro
     success_url = "/libreria/libros/"
     fields = ["nombre", "autor", "categoria", "tapa"]
+
+
+class PeliculasUpdate(LoginRequiredMixin, UpdateView):
+    model = pelicula
+    success_url = "/libreria/peliculas/"
+    fields = ["nombre", "director", "tematica","ano_estreno", "tapa"]
 
 class LibrosDelete(LoginRequiredMixin, DeleteView):
     model = libro
@@ -319,20 +237,11 @@ def agregar_avatar(request):
 
         if form.is_valid():
             data= form.cleaned_data
-
-            usuario= User.objects.filter(username=request.user.username).first()
-            avatar = Avatar(user=usuario, imagen= data["imagen"])
+            avatar = Avatar(user=request.user, imagen= data["imagen"])
             avatar.save()
 
         return render(request, "libreria/principal.html")
         
-
-
-        
-
-
-
-
 
 
 
