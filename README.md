@@ -14,3 +14,7 @@ La web posee los siguientes enlaces a paginas:
 - Peliculas: Permite la vsita de todas las peliculas disponibles para ser catalogados como favoritos o no.
 - Mi biblioteca: Todavia no visto en clases para al loguearse como usuario esto deberia permitir ver todas las peliculas y libros determinadas como favoritas y a su vez agregar de la lista que se obtiene de los datos previamente cargados en peliculas y libros.
  
+
+Usuario de prueba:
+Username: mateotealdi
+Password: nosaberdeti1
